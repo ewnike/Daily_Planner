@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome</title>
+    <style>
+      .container{
+        margin-left: 350px;
+        margin-top: -300px;
+      }
+      .atags{
+        vertical-align: top;
+        margin-left: 900px;
+        display:inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome {{request.session.first_name}}</h1>
+    <h3>Add an Appointment:</h3>
+      <form  action="{% url 'daily_planner:add_appointment' %}" method="post">
+            {% csrf_token %}
+      <input type="hidden" name="title" value="{{appointment.task}}">
+        Date:<br>
+        <input type="date" name="date"><br><br>
+        Time:<br>
+        <input type="time" name="time"><br><br>
+        Task:<br>
+        <input type="text" name="task"><br><br>
+        <input type="submit" value="Plan it!">
+      </form><br><br>
+      {% for message in messages %}
+      <h4><i>{{message}}</i></h4>
+      {% endfor %}
+      <div class="container">
+        <h3>{{request.session.first_name}}'s' Appointments for {{today}}</h3>
+        <table>
+          <tr>
+          <thead>
+            <th style=padding:6px;>Task</th>
+            <th style=padding:6px;>Date</th>
+            <th style=padding:6px;>Time</th>
+            <th style=padding:6px;>Edit</th>
+            <th style=padding:6px;>Delete</th>
+          </thead>
+          </tr>
+          <tbody>
+              {% for t in todayappt %}
+            <tr>
+              <td style=padding:6px;>{{t.task}}</td>
+              <td style=padding:6px;>{{t.date}}</td>
+              <td style=padding:6px;>{{t.time}}</td>
+              <td><a href='/edit_appointment/{{t.id}}'><button type="button" name="Edit">Edit</button></a></td>
+              <td><a href='/delete_appointment/{{t.id}}'><button type="button" name="Delete">Delete</button></a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      <!-- </div> -->
+      <!-- <div class="container"> -->
+        <h3>{{request.session.first_name}}'s' Appointments for the coming days:</h3>
+        <table>
+          <tr>
+          <thead>
+            <th style=padding:6px;>Task</th>
+            <th style=padding:6px;>Date</th>
+            <th style=padding:6px;>Time</th>
+            <th style=padding:6px;>Edit</th>
+            <th style=padding:6px;>Delete</th>
+          </thead>
+          </tr>
+          <tbody>
+              {% for f in futureappt %}
+            <tr>
+              <td style=padding:6px;>{{f.task}}</td>
+              <td style=padding:6px;>{{f.date}}</td>
+              <td style=padding:6px;>{{f.time}}</td>
+              <td><a href='/edit_appointment/{{f.id}}'><button type="button" name="Edit">Edit</button></a></td>
+              <td><a href='/delete_appointment/{{f.id}}'><button type="button" name="Delete">Delete</button></a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+  <div class="atags">
+    <a href="{% url 'daily_planner:logout'%}">Logout</a>
+  </div>
+  </body>
+</html>

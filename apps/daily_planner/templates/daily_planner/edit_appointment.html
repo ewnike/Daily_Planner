@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit</title>
+    <style>
+      .wrapper{
+        height: 400px;
+        width: 600px;
+        border-color: black;
+        border-width: 10px;
+        border-style: double;
+        margin-left: 250px;
+        margin-top: 100px;
+        background-color: silver;
+      }
+      .text{
+        margin-top: 300px;
+        margin-left: 175px;
+
+      }
+      .submit{
+        margin-top:75px;
+        border: black;
+        font-weight: bold;
+        border-width: '2px';
+        margin-right: 60px;
+      }
+      .home{
+        margin-left: 500px;
+        margin-top: -20px;
+      }
+
+    </style>
+  </head>
+    <body>
+      <div class="wrapper" >
+        <center>
+          <h1>Edit Appointment</h1>
+
+          <form class="submit" action="/update_appointment"  method="post">
+            {% csrf_token %}
+            <label for = "task">Appointment:      {{appointment.task}}<input type ="text" name="task" id="task"></label><br><br>
+            <label for = "date">Appointment Date:     {{appointment.date}}<input type="date" name="date" id="date"  ></label><br><br>
+            <label for = "time">Appointment Time:     {{appointment.time}}<input type="time" name="time" id="time" ></label><br><br>
+            <input type="hidden"  name="update" value="{{appointment.id}}"/>
+            <input type="submit" value="Submit"><br>
+          </form>
+        </center>
+        <div class = "home">
+        <a href="{% url 'daily_planner:homepage'%}">Home</a>
+      </div>
+      </div>
+    </div>
+
+  </body>
+</html>
