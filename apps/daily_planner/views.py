@@ -77,19 +77,21 @@ def login(request):
             else:
                 request.session['invalid_login'] = True
                 messages.add_message(request, messages.ERROR,"Password is invalid.")
-                return redirect('daily_planner:login')
+                return redirect('/')
         except:
             request.session['invalid_login'] = True
             messages.add_message(request, messages.ERROR,"That email is not registered!")
-            return redirect('daily_planner:login')
+            return redirect('/')
 
 def homepage(request):
+    user = User.objects.filter(email=request.session['email'])
     today = date.today()
     tomorrow= today + timedelta(1)
     # appointments = Appointment.objects.all()
-    todayappt = Appointment.objects.filter(date = today)
-    futureappt=Appointment.objects.filter(date__gt= tomorrow)
+    todayappt = Appointment.objects.filter(user__id=user[0].id).filter(date = today)
+    futureappt=Appointment.objects.filter(user__id=user[0].id, date__gte= tomorrow)
     context={
+        'user': user,
         'first_name':request.session['first_name'],
         'appointments': Appointment.objects.all(),
         'today':today,

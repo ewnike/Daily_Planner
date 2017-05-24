@@ -40,9 +40,10 @@
 
           <form class="submit" action="/update_appointment"  method="post">
             {% csrf_token %}
-            <label for = "task">Appointment:      {{appointment.task}}<input type ="text" name="task" id="task"></label><br><br>
-            <label for = "date">Appointment Date:     {{appointment.date}}<input type="date" name="date" id="date"  ></label><br><br>
-            <label for = "time">Appointment Time:     {{appointment.time}}<input type="time" name="time" id="time" ></label><br><br>
+
+            <label for = "task">Appointment:   {{appointment.task}} <input type ="text" name="task" id="task"></label><br><br>
+            <label for = "date">Appointment Date:  {{appointment.date}} <input type="date" name="date" id="date"  ></label><br><br>
+            <label for = "time">Appointment Time:     {{appointment.time}}<input value= "time" type="time" name="time" id="time" ></label><br><br>
             <input type="hidden"  name="update" value="{{appointment.id}}"/>
             <input type="submit" value="Submit"><br>
           </form>

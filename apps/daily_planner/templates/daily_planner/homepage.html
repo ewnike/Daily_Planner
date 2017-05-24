@@ -16,7 +16,7 @@
     </style>
   </head>
   <body>
-    <h1>Welcome {{request.session.first_name}}</h1>
+    <h1>Welcome, {{request.session.first_name}}</h1>
     <h3>Add an Appointment:</h3>
       <form  action="{% url 'daily_planner:add_appointment' %}" method="post">
             {% csrf_token %}
